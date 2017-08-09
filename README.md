@@ -8,11 +8,9 @@ You can see this in action at https://radar.thoughtworks.com. If you plug in [th
 
 ## How To Use
 
-The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
+This is a modified version of the tool to bypass the limitation of providing *public* Google Sheet.
 
 ### Setting up your data
-
-You need to make your data public in a form we can digest.
 
 Create a Google Sheet. Give it at least the below column headers, and put in the content that you want:
 
@@ -23,13 +21,15 @@ Create a Google Sheet. Give it at least the below column headers, and put in the
 | Apache Kylin  | assess | platforms              | TRUE  | Apache Kylin is an open source analytics solution ...   |
 | JSF           | hold   | languages & frameworks | FALSE | We continue to see teams run into trouble using JSF ... |
 
-### Sharing the sheet
+### Setting up the credentials
 
-* In Google sheets, go to 'File', choose 'Publish to the web...' and then click 'Publish'.
-* Close the 'Publish to the web' dialog.
-* Copy the URL of your editable sheet from the browser (Don't worry, this does not share the editable version). 
-
-The URL will be similar to [https://docs.google.com/spreadsheets/d/1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U/edit](https://docs.google.com/spreadsheets/d/1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U/edit). In theory we are only interested in the part between '/d/' and '/edit' but you can use the whole URL if you want.
+* [Turn on the Google Sheets API](https://developers.google.com/sheets/api/quickstart/nodejs). Make sure to follow the steps and put client_secret.json on src directory.
+* start the app with `npm start`.
+* open [http://localhost:3100/?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U]()
+* The first time you run it, it will prompt you to authorize access.  
+* Browse to the provided URL in your web browser. If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization.
+* Click the Accept button.
+* Copy the code you're given, paste it into the command-line prompt, and press Enter.
 
 ### Building the radar
 
@@ -39,14 +39,6 @@ That's it!
 
 Note: the quadrants of the radar, and the order of the rings inside the radar will be drawn in the order they appear in your Google Sheet.
 
-### More complex usage
-
-To create the data representation, you can use the Google Sheet [factory](/src/util/factory.js), or you can also insert all your data straight into the code.
-
-The app uses [Tabletop.js](https://github.com/jsoma/tabletop) to fetch the data from a Google Sheet, so refer to their documentation for more advanced interaction.  The input from the Google Sheet is sanitized by whitelisting HTML tags with [sanitize-html](https://github.com/punkave/sanitize-html).
-
-The application uses [webpack](https://webpack.github.io/) to package dependencies and minify all .js and .scss files.
-
 ## Contribute
 
 All tasks are defined in `package.json`.
@@ -54,10 +46,9 @@ All tasks are defined in `package.json`.
 Pull requests are welcome; please write tests whenever possible. 
 Make sure you have nodejs installed.
 
-- `git clone git@github.com:thoughtworks/build-your-own-radar.git`
+- `git clone git@github.com:odigeoteam/build-your-own-radar.git`
 - `npm install`
-- `npm test` - to run your tests
-- `npm run dev` - to run application in localhost:8080. This will watch the .js and .css files and rebuild on file changes
+- `npm start` - to run your tests
 
 ### Don't want to install node? Run with one line docker
 
